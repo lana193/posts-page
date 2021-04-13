@@ -1,8 +1,9 @@
 import React from "react";
+import PostsList from "../containers/posts";
 
 const App = () => {
     return (
-        <div>Posts Page</div>
+        <div><PostsList/></div>
     );
 }
 

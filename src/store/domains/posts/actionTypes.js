@@ -1,0 +1,9 @@
+export default Object.freeze({
+    GET_POSTS: 'posts/GET_POSTS',
+    GET_POSTS_FULFILLED: 'posts/GET_POSTS_FULFILLED',
+    GET_POSTS_REJECTED: 'posts/GET_POSTS_REJECTED',
+
+    GET_POST: 'posts/GET_POST',
+    GET_POST_FULFILLED: 'posts/GET_POST_FULFILLED',
+    GET_POST_REJECTED: 'posts/GET_POST_REJECTED'
+})

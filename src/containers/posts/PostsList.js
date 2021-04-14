@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import PostCard from "./PostCard";
+import PostCard from "../../components/PostCard";
 
 const PostsContainer = styled.div`
     width: 80%;
@@ -13,7 +13,7 @@ const PostsContainer = styled.div`
     align-items: start;
 `;
 
-const PostsList = ({ handleGetPosts, selectedPosts }) => {
+const PostsList = ({ handleGetPosts, selectedPosts, handleGetComments, selectedComments }) => {
 
     useEffect(() => {
         !selectedPosts.length && handleGetPosts();
@@ -21,9 +21,13 @@ const PostsList = ({ handleGetPosts, selectedPosts }) => {
 
     return (
         <PostsContainer>
-            {selectedPosts.map((item, i) => (
-                <PostCard key={i} {...item} />
-                )
+            {selectedPosts.map((post, i) => (
+                <PostCard 
+                    key={i} 
+                    {...post} 
+                    handleGetComments={handleGetComments} 
+                    selectedComments={selectedComments}
+                />)
             )}
         </PostsContainer>
     );

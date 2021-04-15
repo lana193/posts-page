@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { capitalizeFirstLetter } from "../utils/capitilizeFirstLetter";
-import { CommentsIcon, UpIcon, DownIcon } from "../icons/Icons";
+import { CommentsIcon, UpIcon, DownIcon, EditIcon, DeleteIcon } from "../icons/Icons";
 import Comment from "./Comment";
+import AppModal from "../components/modal/AppModal";
+import modalTypes from "./modal/modalTypes";
 
 const PostCardContainer = styled.div`
     padding: 1em 2em;
@@ -11,13 +13,18 @@ const PostCardContainer = styled.div`
     margin-bottom: 15px;
     min-height: 220px;
 
-    .title-wrapper {
+    .post-header {
         display: flex;
-        align-items: center;
         justify-content: space-between;
 
-        span {
-            cursor: pointer;
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+    
+            span {
+                cursor: pointer;
+            }
         }
     }
 
@@ -57,7 +64,12 @@ const handleGetTextToDisplay = (text, limitLength) => {
 }
 
 const PostCard = (props) => {
-    const { handleGetComments, selectedComments } = props;
+    const { 
+            handleGetComments, 
+            selectedComments, 
+            handleDeletePost, 
+            handleEditPost
+         } = props;
     let body = handleGetTextToDisplay(props.body, 195);
     let title = handleGetTextToDisplay(props.title, 20);
 
@@ -67,21 +79,49 @@ const PostCard = (props) => {
     const [ showTitle, setShowTitle ] = useState(false);
     const [ showBody, setShowBody ] = useState(false);
     const [ showComments, setShowComments ] = useState(false);
-
+    
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modalType, setModalType ] = useState(null);
 
     const toggleTitle = () => setShowTitle(!showTitle);
     const toggleBody = () => setShowBody(!showBody);
     const toggleComments = () => setShowComments(!showComments);
 
+    const handleDeleteClick = () => {
+        setModalType(modalTypes.DELETE_POST_MODAL);
+        setModalOpen(true);
+    }
+
+    // const handleAddClick = () => {
+    //     setModalType(modalTypes.ADD_POST_MODAL)
+    //     setModalOpen(true)
+    // }
+
+    const handleEditClick = () => {
+        setModalType(modalTypes.EDIT_POST_MODAL);
+        setModalOpen(true);
+    }
+
+    const modalCallback = () => {
+        setModalOpen(false)
+    }
+
     const handleViewComments = () => {
         handleGetComments(props.id);
         toggleComments();
     }
+
     return (
         <PostCardContainer>
-            <h2 className="post-title">{showTitle ? originalTitle : title}
-                {originalTitle.length > 20 && <span onClick={toggleTitle}>...</span>}
-            </h2>
+            <div className="post-header">
+                <h2 className="post-title">{showTitle ? originalTitle : title}
+                    {originalTitle.length > 20 && <span onClick={toggleTitle}>...</span>}
+                </h2>
+                <div>
+                    <EditIcon onClick={handleEditClick}/>
+                    <DeleteIcon onClick={handleDeleteClick}/>
+                </div>   
+            </div>
             <p>{showBody ? originalBody : body}</p>
             <div className="post-footer">
                 <div>
@@ -108,6 +148,14 @@ const PostCard = (props) => {
                         )}
                     </div>
                 }
+                <AppModal 
+                    modalType={modalType} 
+                    isOpen={modalOpen} 
+                    parentCallback={modalCallback}
+                    deletePost={handleDeletePost}
+                    editPost={handleEditPost}
+                    postId={props.id}
+                />
         </PostCardContainer>
     );
 }

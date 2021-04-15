@@ -1,0 +1,5 @@
+export default Object.freeze({
+    DELETE_POST_MODAL: "DELETE_POST_MODAL",
+    ADD_POST_MODAL: "ADD_POST_MODAL",
+    EDIT_POST_MODAL: "EDIT_POST_MODAL"
+})

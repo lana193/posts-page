@@ -1,3 +1,3 @@
 export { postsReducer } from './reducer';
-export { handleGetPosts, handleGetPost } from './actions';
-export { selectPosts, selectPost} from './selectors';
+export { handleGetPosts, handleGetPost, handleDeletePost, handleEditPost, handleCreatePost } from './actions';
+export { selectPosts, selectPost, selectDeletedPost, selectUpdatedPost, selectCreatedPost } from './selectors';

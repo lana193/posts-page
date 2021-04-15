@@ -22,3 +22,39 @@ export const handleGetPost = (postId) => {
         await dispatch(getPost(postId));
     }
 };
+
+const createPost = (data) => ({
+    type: actionTypes.CREATE_POST,
+    payload: data
+})
+
+export const handleCreatePost = (data) => {
+    return async(dispatch) => {
+        await dispatch(createPost(data));
+    }
+};
+
+const editPost = (postId, data) => ({
+    type: actionTypes.EDIT_POST,
+    payload: {
+        postId,
+        data
+    }//apiClient.put(`posts/${postId}`, data)
+})
+
+export const handleEditPost = (postId, data) => {
+    return async(dispatch) => {
+        await dispatch(editPost(postId, data));
+    }
+};
+
+const deletePost = (postId) => ({
+    type: actionTypes.DELETE_POST,
+    payload: postId//apiClient.delete(`posts/${postId}`)
+})
+
+export const handleDeletePost = (postId) => {
+    return async(dispatch) => {
+        await dispatch(deletePost(postId))
+    }
+};

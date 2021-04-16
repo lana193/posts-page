@@ -5,6 +5,7 @@ import PostCard from "../../components/PostCard";
 import AppModal from "../../components/modal/AppModal";
 import modalTypes from "../../components/modal/modalTypes";
 import Filter from "../../components/Filter";
+import Pagination from "../../components/Pagination";
 
 const PostPageContainer = styled.div`
     width: 100%;
@@ -69,6 +70,20 @@ const PostsList = ({
     }
 
     const displayingPosts = checkedPosts.length > 0 ? checkedPosts: selectedPosts
+
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ postsPerPage ] = useState(9);
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = displayingPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+    console.log("indexOfLastPost", indexOfLastPost);
+    console.log("indexOfFirstPost", indexOfFirstPost);
+    console.log("currentPosts", currentPosts);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
     return (
         <PostPageContainer>
             <div className="filter-container">
@@ -90,7 +105,7 @@ const PostsList = ({
                 </div>
 
                 <div className="posts-wrapper">
-                    {displayingPosts && displayingPosts.map((post, i) => (
+                    {currentPosts && currentPosts.map((post, i) => (
                         <PostCard
                             key={i}
                             {...post}
@@ -101,6 +116,12 @@ const PostsList = ({
                         />)
                     )}
                 </div>
+                <Pagination 
+                    postsPerPage={postsPerPage} 
+                    totalPosts={displayingPosts.length} 
+                    paginate={paginate}
+                    currentPage={currentPage}
+                 />
 
                 <AppModal
                     modalType={modalTypes.ADD_POST_MODAL}

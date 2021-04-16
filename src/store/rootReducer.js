@@ -1,10 +1,12 @@
-import { combineReducers } from 'redux';  
-import { postsReducer } from '../store/domains/posts';
-import { commentsReducer } from '../store/domains/comments';
+import { combineReducers } from "redux";  
+import { postsReducer } from "../store/domains/posts";
+import { commentsReducer } from "../store/domains/comments";
+import { usersReducer } from "../store/domains/users";
 
 const rootReducer = combineReducers({
   postsReducer,
-  commentsReducer
+  commentsReducer,
+  usersReducer
 })
 
 export default rootReducer;

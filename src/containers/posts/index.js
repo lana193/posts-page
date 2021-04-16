@@ -11,8 +11,14 @@ import {
    handleEditPost,
    selectUpdatedPost,
    handleCreatePost,
-   selectCreatedPost
+   selectCreatedPost,
 } from "../../store/domains/posts";
+
+import {
+   handleGetUsers,
+   selectUsers,
+   selectUsersNames
+} from "../../store/domains/users";
 
 import { 
    handleGetComments,
@@ -27,7 +33,9 @@ const mapStateToProps = state => ({
    selectedDeletedPost: selectDeletedPost(state),
    selectedUpdatedPost: selectUpdatedPost(state),
    selectedCreatedPost: selectCreatedPost(state),
-   selectedComments: selectComments(state)
+   selectedComments: selectComments(state),
+   selectedUsers: selectUsers(state),
+   selectedUsersNames: selectUsersNames(state)
 });
 
  const mapDispatchToProps = dispatch => bindActionCreators({
@@ -36,7 +44,8 @@ const mapStateToProps = state => ({
    handleDeletePost,
    handleEditPost,
    handleCreatePost,
-   handleGetComments
+   handleGetComments,
+   handleGetUsers
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsList);

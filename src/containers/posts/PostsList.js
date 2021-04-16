@@ -4,42 +4,63 @@ import styled from "styled-components";
 import PostCard from "../../components/PostCard";
 import AppModal from "../../components/modal/AppModal";
 import modalTypes from "../../components/modal/modalTypes";
+import Filter from "../../components/Filter";
 
-const PostsContainer = styled.div`
-    width: 80%;
-    margin: 0 auto;
+const PostPageContainer = styled.div`
+    width: 100%;
     padding: 2em;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
 
-    .add-post-button {
-        // cursor: pointer;
-        font-size: 20px;
+    .filter-container {
+        border-right: 1px solid grey;
+        width: 100%;
+        pading: 2em;
     }
 
-    .posts-wrapper {
-        margin-top: 50px;
-        column-gap: 1em;
-        padding: 5px;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        align-items: start;
+    .posts-container {
+        padding: 1em;
+
+        .add-post-button {
+            font-size: 20px;
+        }
+    
+        .posts-wrapper {
+            margin-top: 50px;
+            column-gap: 1em;
+            padding: 5px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            align-items: start;
+        }
+
     }
 `;
 
-const PostsList = ({ handleGetPosts, selectedPosts, handleGetComments, selectedComments, handleDeletePost, handleEditPost, handleCreatePost }) => {
+const PostsList = ({ 
+    handleGetPosts, 
+    selectedPosts, 
+    handleGetComments, 
+    selectedComments, 
+    handleDeletePost, 
+    handleEditPost, 
+    handleCreatePost,
+    handleGetUsers,
+    selectedUsersNames
+ }) => {
+
     useEffect(() => {
         !selectedPosts.length && handleGetPosts();
     }, [handleGetPosts, selectedPosts.length])
-    const [addModalOpen, setAddmodalOpen] = useState(false)
 
-    // const [modalOpen, setModalOpen] = useState(false);
-    // const [modalType, setModalType] = useState(null);
+    useEffect(() => {
+        !selectedUsersNames.length && handleGetUsers();
+    }, [handleGetUsers, selectedUsersNames.length])
+
+    const [addModalOpen, setAddmodalOpen] = useState(false)
+    const [checkedPosts, setCheckedPosts] = useState([])
 
     const handleAddClick = () => {
-        // setModalType(modalTypes.ADD_POST_MODAL);
-        // setModalOpen(true)
         setAddmodalOpen(true)
     }
 
@@ -47,29 +68,48 @@ const PostsList = ({ handleGetPosts, selectedPosts, handleGetComments, selectedC
         setAddmodalOpen(false)
     }
 
+    const displayingPosts = checkedPosts.length > 0 ? checkedPosts: selectedPosts
     return (
-        <PostsContainer>
-            <Button color="primary" onClick={handleAddClick} className="add-post-button">Add Post</Button>
-            <div className="posts-wrapper">
-                {selectedPosts && selectedPosts.map((post, i) => (
-                    <PostCard
-                        key={i}
-                        {...post}
-                        handleGetComments={handleGetComments}
-                        selectedComments={selectedComments}
-                        handleDeletePost={handleDeletePost}
-                        handleEditPost={handleEditPost}
-                    />)
-                )}
+        <PostPageContainer>
+            <div className="filter-container">
+                <h2>Filter options</h2>
+                <p>Filter post by autor</p>
+                {selectedUsersNames && selectedUsersNames.map((user, i) => (
+                    <Filter 
+                        key={i} 
+                        user={user} 
+                        selectedPosts={selectedPosts}
+                        checkedPosts={checkedPosts}
+                        setCheckedPosts={setCheckedPosts}
+                    />
+                ))}
             </div>
+            <div className="posts-container">
+                <div>
+                    <Button color="primary" onClick={handleAddClick} className="add-post-button">Add Post</Button>
+                </div>
 
-            <AppModal
-                modalType={modalTypes.ADD_POST_MODAL}
-                isOpen={addModalOpen}
-                parentCallback={modalCallback}
-                createPost={handleCreatePost}
-            />
-        </PostsContainer>
+                <div className="posts-wrapper">
+                    {displayingPosts && displayingPosts.map((post, i) => (
+                        <PostCard
+                            key={i}
+                            {...post}
+                            handleGetComments={handleGetComments}
+                            selectedComments={selectedComments}
+                            handleDeletePost={handleDeletePost}
+                            handleEditPost={handleEditPost}
+                        />)
+                    )}
+                </div>
+
+                <AppModal
+                    modalType={modalTypes.ADD_POST_MODAL}
+                    isOpen={addModalOpen}
+                    parentCallback={modalCallback}
+                    createPost={handleCreatePost}
+                />
+            </div>
+        </PostPageContainer>
     );
 }
 

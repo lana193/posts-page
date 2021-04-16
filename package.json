@@ -1,5 +1,5 @@
 {
-  "name": "test-task-dataox",
+  "name": "post-page-task",
   "version": "1.0.0",
   "description": "page displaying posts",
   "main": "index.js",

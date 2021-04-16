@@ -73,8 +73,8 @@ const PostCard = (props) => {
     let body = handleGetTextToDisplay(props.body, 195);
     let title = handleGetTextToDisplay(props.title, 20);
 
-    const originalBody = capitalizeFirstLetter(props.body)
-    const originalTitle = capitalizeFirstLetter(props.title)
+    const originalBody = capitalizeFirstLetter(props.body);
+    const originalTitle = capitalizeFirstLetter(props.title);
 
     const [ showTitle, setShowTitle ] = useState(false);
     const [ showBody, setShowBody ] = useState(false);
@@ -91,11 +91,6 @@ const PostCard = (props) => {
         setModalType(modalTypes.DELETE_POST_MODAL);
         setModalOpen(true);
     }
-
-    // const handleAddClick = () => {
-    //     setModalType(modalTypes.ADD_POST_MODAL)
-    //     setModalOpen(true)
-    // }
 
     const handleEditClick = () => {
         setModalType(modalTypes.EDIT_POST_MODAL);

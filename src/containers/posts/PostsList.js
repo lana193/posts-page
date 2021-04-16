@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
+import SearchField from "react-search-field";
 import styled from "styled-components";
 import PostCard from "../../components/PostCard";
 import AppModal from "../../components/modal/AppModal";
@@ -38,17 +39,17 @@ const PostPageContainer = styled.div`
     }
 `;
 
-const PostsList = ({ 
-    handleGetPosts, 
-    selectedPosts, 
-    handleGetComments, 
-    selectedComments, 
-    handleDeletePost, 
-    handleEditPost, 
+const PostsList = ({
+    handleGetPosts,
+    selectedPosts,
+    handleGetComments,
+    selectedComments,
+    handleDeletePost,
+    handleEditPost,
     handleCreatePost,
     handleGetUsers,
     selectedUsersNames
- }) => {
+}) => {
 
     useEffect(() => {
         !selectedPosts.length && handleGetPosts();
@@ -60,6 +61,7 @@ const PostsList = ({
 
     const [addModalOpen, setAddmodalOpen] = useState(false)
     const [checkedPosts, setCheckedPosts] = useState([])
+    const [foundPosts, setFoundPosts] = useState([])
 
     const handleAddClick = () => {
         setAddmodalOpen(true)
@@ -69,20 +71,36 @@ const PostsList = ({
         setAddmodalOpen(false)
     }
 
-    const displayingPosts = checkedPosts.length > 0 ? checkedPosts: selectedPosts
+    const displayingPosts = checkedPosts.length > 0 ? checkedPosts : selectedPosts
 
-    const [ currentPage, setCurrentPage ] = useState(1);
-    const [ postsPerPage ] = useState(9);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(9);
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = displayingPosts.slice(indexOfFirstPost, indexOfLastPost);
-
-    console.log("indexOfLastPost", indexOfLastPost);
-    console.log("indexOfFirstPost", indexOfFirstPost);
-    console.log("currentPosts", currentPosts);
+    const currentPosts = foundPosts.length > 0 && foundPosts.slice(indexOfFirstPost, indexOfLastPost);
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleChange = (value, event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    useEffect(() => {
+        const filterItems = (arr, query) => {
+            if (arr.length) {
+                return arr.filter(el => {
+                    const titleCheck = el && el.title && el.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+                    const bodyCheck = el && el.body && el.body.toLowerCase().indexOf(query.toLowerCase()) !== -1
+                    return titleCheck || bodyCheck
+                })
+            }
+            return []
+        };
+        setFoundPosts(filterItems(displayingPosts, searchTerm))
+    }, [displayingPosts, searchTerm])
 
     return (
         <PostPageContainer>
@@ -90,9 +108,9 @@ const PostsList = ({
                 <h2>Filter options</h2>
                 <p>Filter post by autor</p>
                 {selectedUsersNames && selectedUsersNames.map((user, i) => (
-                    <Filter 
-                        key={i} 
-                        user={user} 
+                    <Filter
+                        key={i}
+                        user={user}
                         selectedPosts={selectedPosts}
                         checkedPosts={checkedPosts}
                         setCheckedPosts={setCheckedPosts}
@@ -100,8 +118,12 @@ const PostsList = ({
                 ))}
             </div>
             <div className="posts-container">
-                <div>
+                <div className="post-page-header">
                     <Button color="primary" onClick={handleAddClick} className="add-post-button">Add Post</Button>
+                    <SearchField
+                        placeholder="Search..."
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div className="posts-wrapper">
@@ -116,12 +138,12 @@ const PostsList = ({
                         />)
                     )}
                 </div>
-                <Pagination 
-                    postsPerPage={postsPerPage} 
-                    totalPosts={displayingPosts.length} 
+                <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={foundPosts.length}
                     paginate={paginate}
                     currentPage={currentPage}
-                 />
+                />
 
                 <AppModal
                     modalType={modalTypes.ADD_POST_MODAL}

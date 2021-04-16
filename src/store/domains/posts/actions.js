@@ -39,7 +39,7 @@ const editPost = (postId, data) => ({
     payload: {
         postId,
         data
-    }//apiClient.put(`posts/${postId}`, data)
+    }
 })
 
 export const handleEditPost = (postId, data) => {
@@ -50,7 +50,7 @@ export const handleEditPost = (postId, data) => {
 
 const deletePost = (postId) => ({
     type: actionTypes.DELETE_POST,
-    payload: postId//apiClient.delete(`posts/${postId}`)
+    payload: postId
 })
 
 export const handleDeletePost = (postId) => {

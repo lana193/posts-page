@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "reactstrap";
 import styled from "styled-components";
 
 import { capitalizeFirstLetter } from "../utils/capitilizeFirstLetter";
@@ -11,33 +12,33 @@ const PostCardContainer = styled.div`
     padding: 1em 2em;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin-bottom: 15px;
-    min-height: 220px;
+    min-height: 324px;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+
+    @media only screen and (max-width: 600px) {
+        padding: 0.5em 1em;
+    }
 
     .post-header {
         display: flex;
         justify-content: space-between;
-
         .title-wrapper {
             display: flex;
             align-items: center;
             justify-content: space-between;
-    
+
             span {
                 cursor: pointer;
             }
         }
     }
 
-    .toggle-button {
-        background-color: #2196F3;
-        border-color: #2196F3;
-        cursor: pointer;
-    }
-
     .post-footer {
         display: flex;
         justify-content: space-between;
-
+        align-self: flex-end;
+        
         .comments-wrapper {
             display: flex;
             align-items: center;
@@ -71,7 +72,7 @@ const PostCard = (props) => {
             handleEditPost
          } = props;
     let body = handleGetTextToDisplay(props.body, 195);
-    let title = handleGetTextToDisplay(props.title, 20);
+    let title = handleGetTextToDisplay(props.title, 15);
 
     const originalBody = capitalizeFirstLetter(props.body);
     const originalTitle = capitalizeFirstLetter(props.title);
@@ -109,9 +110,9 @@ const PostCard = (props) => {
     return (
         <PostCardContainer>
             <div className="post-header">
-                <h2 className="post-title">{showTitle ? originalTitle : title}
+                <h3 className="post-title">{showTitle ? originalTitle : title}
                     {originalTitle.length > 20 && <span onClick={toggleTitle}>...</span>}
-                </h2>
+                </h3>
                 <div>
                     <EditIcon onClick={handleEditClick}/>
                     <DeleteIcon onClick={handleDeleteClick}/>
@@ -121,9 +122,9 @@ const PostCard = (props) => {
             <div className="post-footer">
                 <div>
                     {originalBody.length > 195 &&
-                        <button className="toggle-button" onClick={toggleBody}>
+                        <Button className="toggle-button" color="primary" onClick={toggleBody}>
                             {showBody ? "Read Less" : "Read More"}
-                        </button>
+                        </Button>
                     }
                 </div>
                 <div className="comments-wrapper">

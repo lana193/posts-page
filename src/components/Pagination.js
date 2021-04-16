@@ -1,12 +1,23 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const PageNumber = styled.div`
-    cursor: pointer;
+const PaginationWrapper = styled.nav`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    ul {
+        flex-wrap: wrap;
+    }
+
+    div {
+        cursor: pointer;
     
-    &.active{
-        background-color: #007bff;
-        color: #fff;
+        &.active{
+            background-color: #007bff;
+            color: #fff;
+        }
+
     }
 `;
 
@@ -24,17 +35,17 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
         currentPage > totalPages && totalPages > 0 && paginate(totalPages)
     }, [totalPosts, postsPerPage, paginate, currentPage])
     return (
-        <nav>
+        <PaginationWrapper>
             <ul className='pagination'>
                 {pageNumbers.length > 0 && pageNumbers.map(number => (
                     <li key={number} className='page-item'>
-                        <PageNumber onClick={() => paginate(number)} className={`page-link ${number === currentPage && "active"}`}>
+                        <div onClick={() => paginate(number)} className={`page-link ${number === currentPage && "active"}`}>
                             {number}
-                        </PageNumber>
+                        </div>
                     </li>
                 ))}
             </ul>
-        </nav>
+        </PaginationWrapper>
     );
 }
 

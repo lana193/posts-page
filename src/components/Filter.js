@@ -1,10 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const FilterContainer = styled.div`
-`;
-
-import { Form, FormGroup, Label, Input } from "reactstrap";
+import { FormGroup, Label, Input } from "reactstrap";
 
 
 const Filter = ({ user, selectedPosts, checkedPosts, setCheckedPosts }) => {
@@ -19,19 +14,19 @@ const Filter = ({ user, selectedPosts, checkedPosts, setCheckedPosts }) => {
     }
 
     return (
-    <FilterContainer>
-        <FormGroup check inline>
-            <Label check for={`option${user.id}`}>
-            <Input 
-                type="checkbox" 
-                id={`option${user.id}`}
-                onChange={handleChange}
-            /> 
-                {user.name}
-            </Label>
-        </FormGroup>
-    </FilterContainer>
-    )
+        <div>
+            <FormGroup check inline>
+                <Label check for={`option${user.id}`}>
+                <Input 
+                    type="checkbox" 
+                    id={`option${user.id}`}
+                    onChange={handleChange}
+                /> 
+                    {user.name}
+                </Label>
+            </FormGroup>
+        </div>
+    );
 } 
 
 export default Filter;

@@ -6,7 +6,6 @@ const AddPostModalContent = ({ toggle, postId, editPost, createPost }) => {
         title: "",
         body: ""
     })
-    // Math.max(...arr)
 
     const handleChange = (event) => {
         event.persist();
@@ -28,8 +27,8 @@ const AddPostModalContent = ({ toggle, postId, editPost, createPost }) => {
                 <ModalBody>
                     <div className="inforamtion-modal-content">
                         <FormGroup row>
-                            <Label for="Title" sm={2}>{!postId ?'11111111':'Post title'}</Label>
-                            <Col sm={10}>
+                            <Label for="Title" sm={3}>{'Post title'}</Label>
+                            <Col sm={12}>
                                 <Input 
                                     type="text" 
                                     name="title" 
@@ -40,8 +39,8 @@ const AddPostModalContent = ({ toggle, postId, editPost, createPost }) => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label for="body" sm={2}>Post Text</Label>
-                            <Col sm={10}>
+                            <Label for="body" sm={3}>Post Text</Label>
+                            <Col sm={12}>
                                 <Input 
                                     type="textarea" 
                                     name="body" 

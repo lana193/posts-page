@@ -6,6 +6,7 @@ const DeleteModalContent = ({ toggle, deletePost, postId }) => {
         deletePost && deletePost(postId)
         toggle()
     }
+    
     return (
         <>
             <ModalBody>

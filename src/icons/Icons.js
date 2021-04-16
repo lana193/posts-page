@@ -46,7 +46,7 @@ const StyledModifyIcons = styled.svg`
 
 export const EditIcon = (props) => {
     return (
-        <StyledModifyIcons {...props} width="1.2em" height="1.2em" viewBox="0 0 36 36">
+        <StyledModifyIcons {...props} width="1.5em" height="1.5em" viewBox="0 0 36 36">
             <path d="M33 6.4l-3.7-3.7a1.71 1.71 0 0 0-2.36 0L23.65 6H6a2 2 0 0 0-2 2v22a2 2 0 0 0 2 2h22a2 2 0 0 0 2-2V11.76l3-3a1.67 1.67 0 0 0 0-2.36zM18.83 20.13l-4.19.93l1-4.15l9.55-9.57l3.23 3.23zM29.5 9.43L26.27 6.2l1.85-1.85l3.23 3.23z" fill="#626262"/>
         </StyledModifyIcons>
     );
@@ -54,7 +54,7 @@ export const EditIcon = (props) => {
 
 export const DeleteIcon = (props) => {
     return (
-        <StyledModifyIcons {...props} width="1.2em" height="1.2em" viewBox="0 0 24 24">
+        <StyledModifyIcons {...props} width="1.5em" height="1.5em" viewBox="0 0 24 24">
             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z" fill="#626262"/>
         </StyledModifyIcons>
     );

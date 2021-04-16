@@ -1,6 +1,6 @@
-import promise from 'redux-promise-middleware';
-import ReduxThunk from 'redux-thunk';
-import logger from 'redux-logger';
+import promise from "redux-promise-middleware";
+import ReduxThunk from "redux-thunk";
+import logger from "redux-logger";
 
 
 const middleware = () => {

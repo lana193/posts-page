@@ -7,8 +7,6 @@ import modalTypes from "./modalTypes";
 const AppModal = ({ parentCallback = f => f, modalType, isOpen, deletePost, postId, editPost, createPost }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const toggle = () => setModalOpen(!modalOpen);
-    
-    let modalTitle;
 
     useEffect(() => {
         setModalOpen(isOpen);
@@ -21,21 +19,18 @@ const AppModal = ({ parentCallback = f => f, modalType, isOpen, deletePost, post
     const renderSwitch = (modalType, toggle) => {
         switch (modalType) {
             case modalTypes.DELETE_POST_MODAL:
-                modalTitle = "Delete Post";
                 return <DeleteModalContent 
                           toggle={toggle} 
                           deletePost={deletePost}
                           postId={postId}
                        />;
             case modalTypes.EDIT_POST_MODAL:
-                modalTitle = "Edit Post";
                 return <AddPostModalContent 
                           toggle={toggle} 
                           editPost={editPost}
                           postId={postId}
                        />;
             case modalTypes.ADD_POST_MODAL:
-                modalTitle = "Add new Post";
                 return <AddPostModalContent 
                           toggle={toggle} 
                           createPost={createPost}
@@ -43,8 +38,8 @@ const AppModal = ({ parentCallback = f => f, modalType, isOpen, deletePost, post
         }
     }
     return (
-        <Modal isOpen={modalOpen} toggle={toggle} className={"app-modal"} onClosed={handleClosed}>
-            <ModalHeader toggle={toggle}>{modalTitle}</ModalHeader>
+        <Modal isOpen={modalOpen} toggle={toggle} className={"app-modal"} onClosed={handleClosed} centered>
+            <ModalHeader toggle={toggle}>{modalType}</ModalHeader>
             {renderSwitch(modalType, toggle, deletePost, postId)}
         </Modal>
     )
